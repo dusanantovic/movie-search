@@ -180,7 +180,7 @@ function getPopularMovieList() {
     showOrHideElementById("movie-list-container", "hide");
     showOrHideElementById("error-container", "hide");
     showOrHideElementById("loading", "show");
-    axios.get(`http://www.omdbapi.com/?apikey=2725aed3&type=movie&plot=short&s=${searchBy}&page=${page}`)
+    axios.get(`https://www.omdbapi.com/?apikey=2725aed3&type=movie&plot=short&s=${searchBy}&page=${page}`)
         .then(async (response) => {
             let responseData = response.data;
             if (responseData.Error) {
@@ -195,7 +195,7 @@ function getPopularMovieList() {
                         year: Year,
                         link: imdbID
                     };
-                    const movieReponse = await axios.get(`http://www.omdbapi.com/?apikey=2725aed3&type=movie&plot=full&t=${encodeURIComponent(Title)}`)
+                    const movieReponse = await axios.get(`https://www.omdbapi.com/?apikey=2725aed3&type=movie&plot=full&t=${encodeURIComponent(Title)}`)
                     if (!movieReponse.Error) {
                         const { Actors, Awards, BoxOffice, Country, Plot, Production, Released, Runtime, Writer, imdbRating, imdbVotes } = movieReponse.data;
                         movieData.actors = Actors !== "N/A" ? Actors : "";
