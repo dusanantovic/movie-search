@@ -1,0 +1,106 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700">
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="script.js" type="text/javascript"></script>
+    <title>Document</title>
+</head>
+<body>
+    <template>
+        <div class="movie-container">
+            <span class="movie-title"></span>
+            <img class="movie-image" alt="Movie image" onerror="setNotfoundImage(event)" />
+        </div>
+    </template>
+    <form onsubmit="return getPopularMovieList()">
+        <div id="search-container">
+            <label id="search-by-label" for="search-by-input">Search movie</label>
+            <input id="search-by-input" placeholder="Search..." onkeyup="handleSearchBy()">
+            <button id="submit-button" type="submit">Get movie list</button>
+        </div>
+    </form>
+    <div id="movie-list-container">
+    </div>
+    <div id="loading">Loading...</div>
+    <div id="pagination">
+        <button id="decrease" onclick="handlePages(false)"><</button>
+        <span id="pages"></span>
+        <button id="increase" onclick="handlePages(true)">></button>
+    </div>
+    <div id="movie-modal">
+        <div id="modal-container">
+            <div id="modal-header">
+                <span id="modal-title"></span>
+                <i id="modal-close" class="fa fa-close" onclick="closeModal()"></i>
+            </div>
+            <div id="modal-description">
+                <div class="modal-wrapper" id="modal-year-container">
+                    <br />
+                    <span class="modal-label">Released: </span>
+                    <span class="modal-text" id="modal-year"></span>
+                </div>
+                <div class="modal-wrapper" id="modal-runtime-container">
+                    <br />
+                    <span class="modal-label">Runtime: </span>
+                    <span class="modal-text" id="modal-runtime"></span>
+                </div>
+                <div class="modal-wrapper" id="modal-writer-container">
+                    <br />
+                    <span class="modal-label">Writer: </span>
+                    <span class="modal-text" id="modal-writer"></span>
+                </div>
+                <div class="modal-wrapper" id="modal-actors-container">
+                    <br />
+                    <span class="modal-label">Actors: </span>
+                    <span class="modal-text" id="modal-actors"></span>
+                </div>
+                <div class="modal-wrapper" id="modal-country-container">
+                    <br />
+                    <span class="modal-label">Country: </span>
+                    <span class="modal-text" id="modal-country"></span>
+                </div>
+                <div class="modal-wrapper" id="modal-awards-container">
+                    <br />
+                    <span class="modal-label">Awards: </span>
+                    <span class="modal-text" id="modal-awards"></span>
+                </div>
+                <div class="modal-wrapper" id="modal-boxoffice-container">
+                    <br />
+                    <span class="modal-label">Box office: </span>
+                    <span class="modal-text" id="modal-boxoffice"></span>
+                </div>
+                <div class="modal-wrapper" id="modal-production-container">
+                    <br />
+                    <span class="modal-label">Production: </span>
+                    <span class="modal-text" id="modal-production"></span>
+                </div>
+                <div class="modal-wrapper" id="modal-plot-container">
+                    <br />
+                        <span class="modal-text" id="modal-plot"></span>
+                    <br />
+                </div>
+            </div>
+            <div id="modal-footer">
+                <div class="modal-wrapper" id="modal-rating-container">
+                    <span class="modal-label">Rating: </span>
+                    <span class="modal-text" id="modal-rating"></span>
+                </div>
+                <div class="modal-wrapper" id="modal-votes-container">
+                    <span class="modal-label">Votes: </span>
+                    <span class="modal-text" id="modal-votes"></span>
+                </div>
+                <div class="modal-wrapper" id="modal-link-container">
+                    <span class="modal-label">link: </span>
+                    <a class="movie-imdb-link" id="modal-link" target="_blank">Link to IMDB</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="error-container">
+    </div>
+</body>
+</html>
