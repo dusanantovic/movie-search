@@ -6,10 +6,15 @@
 body {
     margin: 0;
     background-color: #313131;
+    animation-name: bodyHideOverflow;
+    animation-duration: 1.5s;
 }
 
 form {
     text-align: center;
+    margin: auto;
+    animation-name: formBottomTop;
+    animation-duration: 1.5s;
 }
 
 button {
@@ -177,6 +182,30 @@ button {
 .movie-imdb-link {
     cursor: pointer;
     text-decoration: none;
+}
+
+@keyframes bodyHideOverflow {
+    0% {
+        overflow: hidden;
+    }
+    100% {
+        overflow: hidden;
+    }
+}
+
+@keyframes formBottomTop {
+    0% {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+    }
+    100% {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0%;
+    }
 }
 
 @keyframes loader {

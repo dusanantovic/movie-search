@@ -21,10 +21,7 @@ function handlePages(isIncrease) {
                 page -= 1;
             }
         }
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+        window.scrollTo({ top: 0 });
         setPages();
         getPopularMovieList();
     }
@@ -82,10 +79,9 @@ function handleMovieContainer() {
 function openMovieModal(movie) {
     showOrHideElementById("movie-modal", "show");
     document.getElementById("modal-title").innerHTML = movie.title;
-    console.log(movie);
     if (movie.released) {
-        showOrHideElementById("modal-year-container", "show");
-        document.getElementById("modal-year").innerHTML = movie.released;
+        showOrHideElementById("modal-released-container", "show");
+        document.getElementById("modal-released").innerHTML = movie.released;
     }
     if (movie.runtime) {
         showOrHideElementById("modal-runtime-container", "show");
@@ -138,7 +134,7 @@ function openMovieModal(movie) {
 
 function closeModal() {
     document.getElementById("modal-title").innerHTML = "";
-    document.getElementById("modal-year").innerHTML = "";
+    document.getElementById("modal-released").innerHTML = "";
     document.getElementById("modal-runtime").innerHTML = "";
     document.getElementById("modal-writer").innerHTML = "";
     document.getElementById("modal-actors").innerHTML = "";
@@ -150,7 +146,7 @@ function closeModal() {
     document.getElementById("modal-rating").innerHTML = "";
     document.getElementById("modal-votes").innerHTML = "";
     document.getElementById("modal-link").href = "";
-    showOrHideElementById("modal-year-container", "hide");
+    showOrHideElementById("modal-released-container", "hide");
     showOrHideElementById("modal-runtime-container", "hide");
     showOrHideElementById("modal-writer-container", "hide");
     showOrHideElementById("modal-actors-container", "hide");
