@@ -5,9 +5,8 @@ form {
 }
 
 #name-and-image {
-    margin: 24px 0px;
+    margin-top: 24px;
 }
-
 
 #support-image {
     height: 120px;
@@ -18,7 +17,7 @@ form {
 #support-text {
     color: #eeeeee;
     font-size: 18px;
-    margin-left: 12px;
+    margin-top: 16px;
 }
 
 #support-text span {
@@ -34,14 +33,4 @@ label {
 button {
     margin-top: 12px;
     margin-bottom: 48px;
-}
-
-@media only screen and (max-width: 600px) {
-    #name-and-image {
-        display: block;
-    }
-
-    #support-text {
-        margin-top: 12px;
-    }
 }
