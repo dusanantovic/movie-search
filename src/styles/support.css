@@ -11,19 +11,19 @@ form {
 }
 
 
-#about-image {
+#support-image {
     height: 120px;
     width: 120px;
     border-radius: 50%;
 }
 
-#about-text {
+#support-text {
     color: #eeeeee;
     font-size: 18px;
     margin-left: 12px;
 }
 
-#about-text span {
+#support-text span {
     color: #fc9a49;
 }
 
@@ -43,7 +43,7 @@ button {
         display: block;
     }
 
-    #about-text {
+    #support-text {
         margin-top: 12px;
     }
 }

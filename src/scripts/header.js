@@ -20,8 +20,8 @@ if (window.location.href.endsWith("/index.html")) {
                 <li id="header-profile" class="header-list-item" onclick="goTo('profile')">
                     <span>Profile</span>
                 </li>
-                <li id="header-about" class="header-list-item" onclick="goTo('about')">
-                    <span>About</span>
+                <li id="header-support" class="header-list-item" onclick="goTo('support')">
+                    <span>Support</span>
                 </li>
                 <li id="header-logout" class="header-list-item" onclick="logout()">
                     <span>Logout</span>
@@ -34,7 +34,7 @@ if (window.location.href.endsWith("/index.html")) {
 if (!window.location.href.endsWith("/index.html")) {
     const headerListEl = document.getElementById("header-list");
     const url = window.location.href;
-    const routes = ["/search.html", "/profile.html", "/about.html"];
+    const routes = ["/search.html", "/profile.html", "/support.html"];
     const mobileHeaderSelectEl = document.getElementById("mobile-header-selected");
     
     function changeSelected(selected) {
