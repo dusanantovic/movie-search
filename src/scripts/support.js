@@ -44,9 +44,10 @@ function sendEmail() {
             textEl.value = "";
             buttonEl.disabled = false;
             buttonEl.innerText = "Send";
-        }).catch(() => {
+        }).catch((err) => {
             buttonEl.disabled = false;
             buttonEl.innerText = "Send";
+            setInputErrorMessage(err.message, "email-limit");
         });
     return false;
 }
