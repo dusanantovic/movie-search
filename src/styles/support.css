@@ -4,19 +4,10 @@ form {
     text-align: center;
 }
 
-#name-and-image {
-    margin-top: 24px;
-}
-
-#support-image {
-    height: 120px;
-    width: 120px;
-    border-radius: 50%;
-}
-
 #support-text {
     color: #eeeeee;
     font-size: 18px;
+    margin-top: 24px;
     margin-top: 16px;
 }
 
