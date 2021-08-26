@@ -3,6 +3,10 @@
 emailjs.init("user_evsJFjdJdL40vVeI8o171");
 
 function sendEmail() {
+    setInputErrorMessage("", "support");
+    setInputErrorMessage("", "name");
+    setInputErrorMessage("", "subject");
+    setInputErrorMessage("", "text");
     const currentUser = getCurrentUser();
     const buttonEl = document.getElementById("email-button");
     if (currentUser.sentEmails >= 3) {

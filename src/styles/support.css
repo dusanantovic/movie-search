@@ -16,5 +16,6 @@ button {
 }
 
 #support-error {
+    display: none;
     margin-top: 24px;
 }
