@@ -40,6 +40,10 @@
     width: 200px;
 }
 
+.back-button {
+    margin-top: 8px;
+}
+
 #error-login-container, #error-signup-container {
     display: none;
 }
