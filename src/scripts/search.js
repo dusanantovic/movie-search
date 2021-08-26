@@ -1,8 +1,16 @@
+"use strict";
+
+// from recently-viewed.js
+
+// createRecentlyViewed
+
+const template = document.getElementsByTagName("template")[0];
+const templateItem = template.content.querySelector("div");
+
 let page = 1;
 let searchBy = "";
 let totalPages = 0;
 let actionInProgress = false;
-let movies = [];
 
 function handleSearchBy() {
     const searchEl = document.getElementById("search-by-input");
@@ -53,31 +61,47 @@ function handleErrorContainer(errorMessage) {
     }
 }
 
-function handleMovieContainer() {
+function getMovieCardElement(movieData) {
+    const card = document.importNode(templateItem, true);
+    card.getElementsByClassName("movie-title")[0].innerHTML = `${movieData.title}<br />${movieData.year}`;
+    card.getElementsByClassName("movie-image")[0].src = movieData.poster;
+    card.onclick = () => openMovieModal(movieData);
+    return card;
+}
+
+function cardSetOpacity(cardEl, i) {
+    setTimeout(() => {
+        cardEl.style.opacity = 1;
+        setTimeout(() => {
+            cardEl.style.transitionDelay = "unset";
+        }, (i + 1) * 0.3);
+    });
+}
+
+function handleMovieContainer(movies) {
     showOrHideElementById("pagination", "show");
     setPages();
-    const template = document.getElementsByTagName("template")[0];
-    const templateItem = template.content.querySelector("div");
     const movieEl = showOrHideElementById("movie-list-container", "show");
     movieEl.innerHTML = "";
     for (let i = 0; i < movies.length; i++) {
-        const movieData = movies[i];
-        const newNodeEl = document.importNode(templateItem, true);
-        newNodeEl.getElementsByClassName("movie-title")[0].innerHTML = `${movieData.title}<br />${movieData.year}`;
-        newNodeEl.getElementsByClassName("movie-image")[0].src = movieData.poster;
-        newNodeEl.id = `movie-container-${i}`;
-        newNodeEl.onclick = () => openMovieModal(movieData);
-        movieEl.appendChild(newNodeEl);
-        setTimeout(() => {
-            const createdElement = document.getElementById(`movie-container-${i}`);
-            createdElement.style.transitionDelay = `${(i + 1) * 0.3}s`;
-            createdElement.style.opacity = 1;
-        });
+        const cardEl = getMovieCardElement(movies[i]);
+        cardEl.style.transitionDelay = `${(i + 1) * 0.3}s`;
+        movieEl.appendChild(cardEl);
+        cardSetOpacity(cardEl, i);
     }
 }
 
 function openMovieModal(movie) {
-    showOrHideElementById("movie-modal", "show");
+    const currentUser = getCurrentUser();
+    if (!currentUser.recentlyViewed || !currentUser.recentlyViewed.find(viewedMovie => viewedMovie.id === movie.id)) {
+        if (currentUser.recentlyViewed && currentUser.recentlyViewed.length === 10) {
+            currentUser.recentlyViewed.pop();
+        }
+        const recentlyViewed = currentUser.recentlyViewed ? [movie, ...currentUser.recentlyViewed] : [movie];
+        updateUser({ recentlyViewed });
+        fulfillRecentlyViewed();
+    }
+    showOrHideElementById("movie-modal", "show", "flex");
     document.getElementById("modal-title").innerHTML = movie.title;
     if (movie.released) {
         showOrHideElementById("modal-released-container", "show");
@@ -115,8 +139,10 @@ function openMovieModal(movie) {
         showOrHideElementById("modal-plot-container", "show");
         document.getElementById("modal-plot").innerHTML = movie.plot;
     }
-    if (movie.rating || movie.votes || movie.link) {
-        showOrHideElementById("modal-footer", "show");
+    showOrHideElementById("modal-footer", "show");
+    showOrHideElementById("modal-link-container", "show");
+    document.getElementById("modal-link").href = `https://www.imdb.com/title/${movie.id}`;
+    if (movie.rating || movie.votes) {
         if (movie.rating) {
             showOrHideElementById("modal-rating-container", "show");
             document.getElementById("modal-rating").innerHTML = movie.rating;
@@ -124,10 +150,6 @@ function openMovieModal(movie) {
         if (movie.votes) {
             showOrHideElementById("modal-votes-container", "show");
             document.getElementById("modal-votes").innerHTML = movie.votes;
-        }
-        if (movie.link) {
-            showOrHideElementById("modal-link-container", "show");
-            document.getElementById("modal-link").href = `https://www.imdb.com/title/${movie.link}`;
         }
     }
 }
@@ -171,7 +193,6 @@ function getPopularMovieList() {
         return false;
     }
     actionInProgress = true;
-    movies = [];
     showOrHideElementById("pagination", "hide");
     showOrHideElementById("movie-list-container", "hide");
     showOrHideElementById("error-container", "hide");
@@ -180,8 +201,10 @@ function getPopularMovieList() {
         .then(async (response) => {
             let responseData = response.data;
             if (responseData.Error) {
+                showOrHideElementById("loading", "hide");
                 handleErrorContainer(responseData.Error);
             } else {
+                const movies = [];
                 totalPages = Math.ceil(responseData.totalResults / 10);
                 for (let i = 0; i < responseData.Search.length; i++) {
                     const { Title, Poster, Year, imdbID } = responseData.Search[i];
@@ -189,7 +212,7 @@ function getPopularMovieList() {
                         title: Title,
                         poster: Poster,
                         year: Year,
-                        link: imdbID
+                        id: imdbID
                     };
                     const movieReponse = await axios.get(`https://www.omdbapi.com/?apikey=2725aed3&type=movie&plot=full&t=${encodeURIComponent(Title)}`)
                     if (!movieReponse.Error) {
@@ -207,31 +230,18 @@ function getPopularMovieList() {
                         movieData.votes = imdbVotes !== "N/A" ? imdbVotes : "";
                     }
                     movies.push(movieData);
-                } 
+                }
+                showOrHideElementById("loading", "hide");
                 handleMovieContainer(movies);
             }
-            showOrHideElementById("loading", "hide");
             actionInProgress = false;
+        }).catch(e => {
+            showOrHideElementById("loading", "hide");
+            handleErrorContainer(e.message);
         });
     return false;
 }
 
-function showOrHideElementById(elementName, action, showStyle = "") {
-    const element = document.getElementById(elementName);
-    if (action === "show") {
-        element.style.display = showStyle || "block";
-    } else if (action === "hide") {
-        element.style.display = "none";
-    }
-    return element;
-}
-
-document.addEventListener("mouseover", (event) => {
-    if (event.target && event.target.id && event.target.id.includes("movie-container")) {
-        document.getElementById(event.target.id).style.transitionDelay = "unset";
-    }
-});
-
 function setNotfoundImage(event) {
-    event.target.src = "./notfound.jpg";
+    event.target.src = `${getSrcPath()}/images/notfound.jpg`;
 }

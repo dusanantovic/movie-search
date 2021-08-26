@@ -1,11 +1,4 @@
-* {
-    font-family: Poppins;
-    font-size: 14px;
-}
-
 body {
-    margin: 0;
-    background-color: #313131;
     animation-name: bodyHideOverflow;
     animation-duration: 1.5s;
 }
@@ -23,7 +16,6 @@ button {
 
 #movie-list-container,#error-container {
     display: none;
-    color: #cccccc;
     min-height: 100px;
     text-align: center;
     width: 100%;
@@ -59,23 +51,6 @@ button {
     max-width: 115px;
 }
 
-#submit-button,#search-by-input {
-    outline: none;
-    border: 2px solid #dddddd;
-    padding: 3px 8px;
-    border-radius: 10px 0px 10px 10px;
-    background-color: #313131;
-    color: #eeeeee;
-    transition: 0.4s;
-}
-
-#submit-button:hover, #search-by-input:focus {
-    border: 2px solid #f59342;
-    text-decoration: none;
-    border-radius: 10px 10px 0px 10px;
-    color: #fc9a49;
-}
-
 .movie-container {
     cursor: pointer;
     display: inline-block;
@@ -92,11 +67,13 @@ button {
 
 .movie-title {
     display: block;
+    color: #cccccc;
     margin-bottom: 12px;
 }
 
 .movie-image {
     height: 200px;
+    max-width: 100%;
 }
 
 #pagination {
@@ -106,21 +83,11 @@ button {
     text-align: center;
 }
 
-#loading {
-    display: none;
-    color: #dddddd;
-    font-size: 18px;
-    margin-top: 24px;
-    animation-name: loader;
-    animation-duration: 0.8s;
-    animation-iteration-count: infinite;
-    width: 100%;
-    text-align: center;
-}
-
 #movie-modal {
     display: none;
     position: fixed;
+    justify-content: center;
+    align-items: center;
     top: 0;
     left: 0;
     right: 0;
@@ -135,13 +102,13 @@ button {
 #modal-container {
     position: relative;
     background-color: rgba(0, 0, 0, 0.7);
-    margin: auto;
-    margin-top: 50px;
     width: 45%;
     border: 2px solid #fc9a49;
     border-radius: 24px 24px 0px 24px;
     min-height: 400px;
+    max-height: calc(100% - 64px);
     padding: 24px;
+    overflow: auto;
 }
 
 #modal-title {
@@ -205,19 +172,7 @@ button {
         position: absolute;
         left: 0;
         right: 0;
-        top: 0%;
-    }
-}
-
-@keyframes loader {
-    0% {
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
+        top: calc(0% + 125px); /* header height is 125px */
     }
 }
 
@@ -239,10 +194,26 @@ button {
         width: auto;
         border: none;
         height: calc(100vh - 48px);
+        max-height: unset;
         overflow-y: auto;
     }
 
     #modal-header {
         padding-right: 48px;
+    }
+
+    @keyframes formBottomTop {
+        0% {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 100%;
+        }
+        100% {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: calc(0% + 93px); /* header height is 93px */
+        }
     }
 }

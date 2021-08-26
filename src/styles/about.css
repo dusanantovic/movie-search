@@ -1,0 +1,49 @@
+form {
+    display: grid;
+    justify-content: center;
+    text-align: center;
+}
+
+#name-and-image {
+    display: flex;
+    align-items: center;
+    margin: 24px 0px;
+}
+
+
+#about-image {
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+}
+
+#about-text {
+    color: #eeeeee;
+    font-size: 18px;
+    margin-left: 12px;
+}
+
+#about-text span {
+    color: #fc9a49;
+}
+
+label {
+    color: #eeeeee;
+    text-align: left;
+    margin-top: 12px;
+}
+
+button {
+    margin-top: 12px;
+    margin-bottom: 48px;
+}
+
+@media only screen and (max-width: 600px) {
+    #name-and-image {
+        display: block;
+    }
+
+    #about-text {
+        margin-top: 12px;
+    }
+}

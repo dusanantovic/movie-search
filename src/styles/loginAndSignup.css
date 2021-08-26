@@ -1,0 +1,70 @@
+.container {
+    margin: auto;
+    text-align: center;
+    padding: 24px;
+    margin-top: 60px;
+    border: 2px solid #f59342;
+    border-radius: 10px 10px 0px 10px;
+    background-color: transparent;
+}
+
+#login-container, #signup-container {
+    position: relative;
+    min-width: 224px;
+    max-width: 292px;
+}
+
+.login-and-signup-background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url('../images/wallpaper1.jpg');
+    border-radius: 10px 10px 0px 10px;
+    opacity: 0.08;
+    z-index: -1;
+}
+
+#signup-container {
+    display: none;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.big-button {
+    margin: auto;
+    margin-top: 24px;
+    display: block;
+    padding: 12px;
+    width: 200px;
+}
+
+#error-login-container, #error-signup-container {
+    display: none;
+}
+
+#new-user-message {
+    margin-top: 24px;
+    color: #eeeeee;
+}
+
+#new-user-message button {
+    border: none;
+    padding: 0;
+}
+
+@media only screen and (max-width: 600px) {
+    .container {
+        border: none;
+    }
+
+    #login-container {
+        max-width: none;
+    }
+
+    #signup-container {
+        max-height: none;
+        overflow-y: hidden;
+    }
+}

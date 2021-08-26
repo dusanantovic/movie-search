@@ -1,0 +1,34 @@
+form {
+    display: flex;
+    justify-content: space-between;
+}
+
+label {
+    display: block;
+    color: #eeeeee;
+    margin-top: 8px;
+}
+
+#error-profile-container {
+    margin-top: 12px;
+}
+
+#container-left button {
+    display: block;
+    margin-top: 24px;
+}
+
+#container-right button {
+    margin-top: 38px;
+}
+
+@media only screen and (max-width: 800px) {
+    form {
+        display: grid;
+        justify-content: center;
+    }
+
+    #container-right button {
+        margin-top: 64px;
+    }
+}

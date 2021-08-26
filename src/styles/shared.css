@@ -1,0 +1,144 @@
+* {
+    font-family: Poppins;
+    font-size: 14px;
+}
+
+body {
+    margin: 0;
+    background-color: #313131;
+    margin: 0px 20%;
+    padding: 0px 2%;
+    box-shadow: 0px -9px 8px #eeeeee;
+}
+
+.button {
+    cursor: pointer;
+}
+
+.input {
+    margin: 12px 0px;
+}
+
+.button, .input {
+    outline: none;
+    border: 2px solid #dddddd;
+    padding: 3px 8px;
+    border-radius: 10px 0px 10px 10px;
+    background-color: #313131;
+    color: #eeeeee;
+    transition: 0.4s;
+}
+
+.button:hover, .input:focus {
+    border: 2px solid #f59342;
+    border-radius: 10px 10px 0px 10px;
+    color: #fc9a49;
+}
+
+.button:disabled {
+    border-radius: 10px 0px 10px 10px;
+    border: 2px solid #dddddd;
+    color: #eeeeee;
+    cursor: default;
+    background-color: #9b9b9b;
+}
+
+button:focus, button:active, button:hover, input:focus, input:hover {
+    outline: none;
+    text-decoration: none;
+}
+
+.input-error {
+    text-align: left;
+    color: red;
+    font-size: 12px;
+    padding-left: 12px;
+    display: none;
+}
+
+.error-message {
+    color: red;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+#wallpaper-1, #wallpaper-2 {
+    position: fixed;
+    top: 0;
+    width: 20%;
+    height: 100%;
+    opacity: 0.6;
+    transition: 0.4s;
+}
+
+#wallpaper-1 {
+    left: 0;
+    background-position: center;
+}
+
+#wallpaper-2 {
+    right: 0;
+    background-position: left top;
+}
+
+#loading {
+    display: none;
+    color: #dddddd;
+    font-size: 18px;
+    margin-top: 24px;
+    animation-name: loader;
+    animation-duration: 0.8s;
+    animation-iteration-count: infinite;
+    width: 100%;
+    text-align: center;
+}
+
+#go-to-top {
+    position: fixed;
+    bottom: 50px;
+    right: 150px;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #eeeeee;
+    padding: 12px;
+    border-radius: 10px 0px 10px 10px;
+    border: 2px solid #eeeeee;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+#go-to-top:hover {
+    color: #f59342;
+    border: 2px solid #f59342;
+    border-radius: 10px 10px 0px 10px;
+}
+
+@keyframes loader {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@media only screen and (max-width: 950px) {
+    #go-to-top {
+        bottom: 24px;
+        right: 24px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        margin: 0px;
+        padding: 0px 5%;
+    }
+
+    #wallpaper-1, #wallpaper-2 {
+        display: none;
+    }
+}
