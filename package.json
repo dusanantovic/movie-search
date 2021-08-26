@@ -5,12 +5,17 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "heroku:login": "heroku login",
+    "deploy": "git push heroku main"
   },
   "keywords": [],
   "author": "Antovic Dusan",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "heroku": "^7.59.0"
   }
 }
