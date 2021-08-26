@@ -6,8 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
+    "dev": "xdg-open http://localhost:3000 && nodemon server.js -e js,html,css",
     "heroku:login": "heroku login",
-    "deploy": "git push heroku main"
+    "heroku:deploy": "git push heroku main"
   },
   "keywords": [],
   "author": "Antovic Dusan",
@@ -16,6 +17,7 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "heroku": "^7.59.0"
+    "heroku": "^7.59.0",
+    "nodemon": "^2.0.12"
   }
 }

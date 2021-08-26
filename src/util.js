@@ -1,6 +1,6 @@
 "use strict";
 
-const getSrcPath = () => `${window.location.href.split("/src")[0]}/src`;
+const getSrcPath = () => window.location.origin;
 
 function goTo(to) {
     window.location.href = `${getSrcPath()}/${to}.html`;
