@@ -6,7 +6,7 @@ function sendEmail() {
     const currentUser = getCurrentUser();
     const buttonEl = document.getElementById("email-button");
     if (currentUser.sentEmails >= 3) {
-        setInputErrorMessage("You reached email limit", "email-limit");
+        setInputErrorMessage("You reached email limit", "support");
         buttonEl.disabled = true;
         return false;
     }
@@ -44,10 +44,10 @@ function sendEmail() {
             textEl.value = "";
             buttonEl.disabled = false;
             buttonEl.innerText = "Send";
-        }).catch((err) => {
+        }).catch(() => {
             buttonEl.disabled = false;
             buttonEl.innerText = "Send";
-            setInputErrorMessage(err.message, "email-limit");
+            setInputErrorMessage("Error trying to send email", "support");
         });
     return false;
 }
