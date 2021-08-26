@@ -1,15 +1,5 @@
 "use strict";
 
-const options = {
-    method: "GET",
-    url: "https://imdb8.p.rapidapi.com/title/get-news",
-    params: { tconst: "tt0944947", limit: "25" },
-    headers: {
-        "x-rapidapi-key": "87f933e2damshd03194bda2c8fe3p12fe4ajsnc6631901e826",
-        "x-rapidapi-host": "imdb8.p.rapidapi.com"
-    }
-};
-
 function createNews(items) {
     const newsEl = document.getElementById("news-list-container");
     const template = document.getElementsByTagName("template")[0];
@@ -40,7 +30,15 @@ const topNews = jsonTopNews ? JSON.parse(jsonTopNews) : {};
 
 if (Object.keys(topNews).length === 0 || topNews.items.length === 0 || topNews.created !== moment(new Date()).format("YYYY/MM/DD h A")) {
     localStorage.removeItem("temporaryTopNews");
-    axios.request(options).then(function (response) {
+    axios.request({
+        method: "GET",
+        url: "https://imdb8.p.rapidapi.com/title/get-news",
+        params: { tconst: "tt0944947", limit: "25" },
+        headers: {
+            "x-rapidapi-key": "87f933e2damshd03194bda2c8fe3p12fe4ajsnc6631901e826",
+            "x-rapidapi-host": "imdb8.p.rapidapi.com"
+        }
+    }).then(function (response) {
         showOrHideElementById("loading", "hide");
         const items = response.data && response.data.items || [];
         if (items.length > 0) {
