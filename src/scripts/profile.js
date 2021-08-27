@@ -35,12 +35,14 @@ function updateProfile() {
 }
 
 function deleteAccount() {
-    const jsonUsers = localStorage.getItem("usersDB");
-    const loggedIn = localStorage.getItem("loggedIn");
-    const users = jsonUsers ? JSON.parse(jsonUsers) : [];
-    const newUsers = users.filter(user => ![user.email, user.username].includes(loggedIn));
-    localStorage.setItem("usersDB", JSON.stringify(newUsers));
-    logout();
+    if (confirm("Are your sure you want to delete your account?")) {
+        const jsonUsers = localStorage.getItem("usersDB");
+        const loggedIn = localStorage.getItem("loggedIn");
+        const users = jsonUsers ? JSON.parse(jsonUsers) : [];
+        const newUsers = users.filter(user => ![user.email, user.username].includes(loggedIn));
+        localStorage.setItem("usersDB", JSON.stringify(newUsers));
+        logout();
+    }
 }
 
 function showHideRepeatPassword() {

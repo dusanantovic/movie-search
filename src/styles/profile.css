@@ -22,6 +22,11 @@ label {
     margin-top: 38px;
 }
 
+#delete-button {
+    border-color: red;
+    color: red;
+}
+
 @media only screen and (max-width: 800px) {
     form {
         display: grid;

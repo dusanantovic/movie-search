@@ -1,9 +1,5 @@
 "use strict";
 
-// from recently-viewed.js
-
-// createRecentlyViewed
-
 const template = document.getElementsByTagName("template")[0];
 const templateItem = template.content.querySelector("div");
 
@@ -11,6 +7,8 @@ let page = 1;
 let searchBy = "";
 let totalPages = 0;
 let actionInProgress = false;
+let lastSearchedMovies = [];
+let lastSearchBy = "";
 
 function handleSearchBy() {
     const searchEl = document.getElementById("search-by-input");
@@ -61,20 +59,28 @@ function handleErrorContainer(errorMessage) {
     }
 }
 
-function getMovieCardElement(movieData) {
+function getMovieCardElement(movieData, index) {
     const card = document.importNode(templateItem, true);
-    card.getElementsByClassName("movie-title")[0].innerHTML = `${movieData.title}<br />${movieData.year}`;
-    card.getElementsByClassName("movie-image")[0].src = movieData.poster;
+    const movieCardTitle = card.getElementsByClassName("movie-title")[0];
+    const movieCardImage = card.getElementsByClassName("movie-image")[0];
+    card.id = `movie-card-index-${index}`;
+    movieCardTitle.innerHTML = `${movieData.title}<br />${movieData.year}`;
+    movieCardImage.src = movieData.poster;
+    card.onmouseover = () => removeDelay(index);
+    movieCardTitle.onmouseover = () => removeDelay(index);
+    movieCardImage.onmouseover = () => removeDelay(index);
     card.onclick = () => openMovieModal(movieData);
     return card;
+}
+
+function removeDelay(index) {
+    const movieCardEl = document.getElementById(`movie-card-index-${index}`);
+    movieCardEl.style.removeProperty("transition-delay");
 }
 
 function cardSetOpacity(cardEl, i) {
     setTimeout(() => {
         cardEl.style.opacity = 1;
-        setTimeout(() => {
-            cardEl.style.transitionDelay = "unset";
-        }, (i + 1) * 0.3);
     });
 }
 
@@ -84,7 +90,8 @@ function handleMovieContainer(movies) {
     const movieEl = showOrHideElementById("movie-list-container", "show");
     movieEl.innerHTML = "";
     for (let i = 0; i < movies.length; i++) {
-        const cardEl = getMovieCardElement(movies[i]);
+        const cardEl = getMovieCardElement(movies[i], i);
+        cardEl.style.opacity = 0;
         cardEl.style.transitionDelay = `${(i + 1) * 0.3}s`;
         movieEl.appendChild(cardEl);
         cardSetOpacity(cardEl, i);
@@ -145,7 +152,7 @@ function openMovieModal(movie) {
     if (movie.rating || movie.votes) {
         if (movie.rating) {
             showOrHideElementById("modal-rating-container", "show");
-            document.getElementById("modal-rating").innerHTML = movie.rating;
+            document.getElementById("modal-rating").innerHTML = `${movie.rating}/10`;
         }
         if (movie.votes) {
             showOrHideElementById("modal-votes-container", "show");
@@ -189,6 +196,10 @@ function getPopularMovieList() {
         handleErrorContainer("Search field is required");
         return false;
     }
+    if (lastSearchBy !== searchBy) {
+        lastSearchedMovies = [];
+    }
+    lastSearchBy = searchBy;
     if (actionInProgress) {
         return false;
     }
@@ -197,7 +208,9 @@ function getPopularMovieList() {
     showOrHideElementById("movie-list-container", "hide");
     showOrHideElementById("error-container", "hide");
     showOrHideElementById("loading", "show");
-    axios.get(`https://www.omdbapi.com/?apikey=2725aed3&type=movie&plot=short&s=${searchBy}&page=${page}`)
+    const alreadySearchedMovies = lastSearchedMovies[page - 1] || [];
+    if (alreadySearchedMovies.length === 0) {
+        axios.get(`https://www.omdbapi.com/?apikey=2725aed3&type=movie&plot=short&s=${searchBy}&page=${page}`)
         .then(async (response) => {
             let responseData = response.data;
             if (responseData.Error) {
@@ -250,14 +263,20 @@ function getPopularMovieList() {
                     }
                     movies.push(movieData);
                 }
+                lastSearchedMovies.push(movies);
                 showOrHideElementById("loading", "hide");
                 handleMovieContainer(movies);
+                actionInProgress = false;
             }
-            actionInProgress = false;
         }).catch(e => {
             showOrHideElementById("loading", "hide");
             handleErrorContainer(e.message);
         });
+    } else {
+        showOrHideElementById("loading", "hide");
+        handleMovieContainer(alreadySearchedMovies);
+        actionInProgress = false;
+    }
     return false;
 }
 
