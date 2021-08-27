@@ -27,7 +27,7 @@ function updateProfile() {
     updateUser({
         email,
         username: document.getElementById("username").value,
-        phone: document.getElementById("phone").value,
+        phone: document.getElementById("phone").value || "",
         password: document.getElementById("password").value
     });
     localStorage.setItem("loggedIn", email);

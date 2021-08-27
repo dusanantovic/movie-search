@@ -27,15 +27,14 @@ function usernameValidation() {
 }
 
 function phoneValidation() {
-    const phone = document.getElementById("phone").value;
-    if (!phone || !phone.trim()) {
-        return setInputErrorMessage("Phone number is requried", "phone");
-    }
-    const phoneRegex = /^06[0-9]\/(([0-9]{2}-){2})([0-9]{3})$/;
-    if (!phoneRegex.test(phone)) {
-        return setInputErrorMessage(`Phone number format is not valid ("06X/XX-XX-XXX")`, "phone");
-    }
     setInputErrorMessage("", "phone");
+    const phone = document.getElementById("phone").value;
+    if (phone) {
+        const phoneRegex = /^06[0-9]\/(([0-9]{2}-){2})([0-9]{3})$/;
+        if (!phoneRegex.test(phone)) {
+            return setInputErrorMessage(`Phone number format is not valid ("06X/XX-XX-XXX")`, "phone");
+        }
+    }
     return true;
 }
 

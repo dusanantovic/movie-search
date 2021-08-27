@@ -216,7 +216,7 @@ function getPopularMovieList() {
                     };
                     const movieReponse = await axios.get(`https://www.omdbapi.com/?apikey=2725aed3&type=movie&plot=full&t=${encodeURIComponent(Title)}`)
                     if (!movieReponse.Error) {
-                        const { Actors, Awards, BoxOffice, Country, Plot, Production, Released, Runtime, Writer, imdbRating, imdbVotes } = movieReponse.data;
+                        const { Actors, Awards, BoxOffice, Country, Plot, Production, Released, Runtime, Writer, /*Ratings,*/ imdbRating, imdbVotes } = movieReponse.data;
                         movieData.actors = Actors !== "N/A" ? Actors : "";
                         movieData.awards = Awards !== "N/A" ? Awards : "";
                         movieData.boxOffice = BoxOffice !== "N/A" ? BoxOffice : "";
@@ -228,6 +228,25 @@ function getPopularMovieList() {
                         movieData.writer = Writer !== "N/A" ? Writer : "";
                         movieData.rating = imdbRating !== "N/A" ? imdbRating : "";
                         movieData.votes = imdbVotes !== "N/A" ? imdbVotes : "";
+                        /*
+                            movieData.ratings = Ratings.map(rating => {
+                                const ratingData = {
+                                    source: rating.Source || "",
+                                    value: rating.Value || "",
+                                    votes: ""
+                                };
+                                if (ratingData.source === "Internet Movie Database") {
+                                    ratingData.source = "IMDB";
+                                    const imdbValue = ratingData.value.split("/");
+                                    if (imdbValue.length > 0) {
+                                        ratingData.value = `${(parseFloat(imdbValue[0]) * 10).toFixed(2)}%`;
+                                    }
+                                    ratingData.votes = imdbVotes !== "N/A" ? imdbVotes : "";
+                                } else if (ratingData.source === "Rotten Tomatoes") {
+                                    ratingData.source = "Rotten";
+                                }
+                            }).filter(rating => !!rating.source);
+                        */
                     }
                     movies.push(movieData);
                 }

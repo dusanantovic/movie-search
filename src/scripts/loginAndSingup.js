@@ -67,7 +67,7 @@ function signup() {
     addUser({
         email: document.getElementById("email").value,
         username: document.getElementById("username").value,
-        phone: document.getElementById("phone").value,
+        phone: document.getElementById("phone").value || "",
         password: newPassword
     });
     switchScreens();
