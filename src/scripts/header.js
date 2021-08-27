@@ -2,7 +2,7 @@ const headerEl = document.getElementById("header");
 if (window.location.href.endsWith("/index.html")) {
     headerEl.innerHTML = `
         <div id="header-welcome-container">
-            <div id="header-welcome">Welcome to movie tracker! <br /> Please login or signup if you don't have account.</div>
+            <div id="header-welcome">Welcome to movie tracker!</div>
         </div>
     `;
     headerEl.style.borderBottom = "unset";
