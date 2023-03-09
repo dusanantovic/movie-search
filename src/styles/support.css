@@ -4,6 +4,10 @@ form {
     text-align: center;
 }
 
+.input {
+    width: 200px;
+}
+
 label {
     color: #eeeeee;
     text-align: left;
